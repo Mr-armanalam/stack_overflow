@@ -33,6 +33,6 @@ export const formatNumber = (num: number): string => {
   } else if (num >= 1e3) {
     return `${(num / 1e3).toFixed(1)}K`; // Format for thousands
   } else {
-    return num.toString(); // Return as is for smaller numbers
+    return num?.toString(); // Return as is for smaller numbers
   }
 };

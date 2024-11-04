@@ -22,12 +22,23 @@ import { QuestionSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname} from "next/navigation";
+import { useRouter } from 'next/navigation'
+
 
 const type: any = "create";
 
-const Question = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const Question = ({mongoUserId}: Props) => {
+  
   const editorRef = useRef(null);
+    const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const pathname = usePathname();
+
 
   const form = useForm<z.infer<typeof QuestionSchema>>({
     resolver: zodResolver(QuestionSchema),
@@ -38,22 +49,25 @@ const Question = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof QuestionSchema>) {
+   function onSubmit(values: z.infer<typeof QuestionSchema>) {
     setIsSubmitting(true);
 
     try {
       // make an async call to your API -> create a question
       // contain all form data
-
-      await createQuestion({
+       createQuestion({
         title: values.title,
         content: values.explanation,
         tags: values.tags,
-        // author:           //tricky////////////////////////////////
+        author: JSON.parse(mongoUserId),
+        path:pathname        
       });
+
       // navigate to home page
-    } catch (error) {
+      router.push('/');
       
+    } catch (error) {
+      console.log(error);
     }finally {
       setIsSubmitting(false);
     }

@@ -5,10 +5,7 @@ let isConnected: boolean = false;
 
 export const connectToDatabase = async () => {
    mongoose.set("strictQuery", true); // only allow query that match with schema
-  console.log(process.env.NEXT_PUBLIC_MONGODB_URL);
-
-  console.log (mongoose)
-
+   
   if (!process.env.NEXT_PUBLIC_MONGODB_URL) {
     return console.log("Missing mongodb URL");
   }

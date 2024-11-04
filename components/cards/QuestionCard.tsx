@@ -46,8 +46,8 @@ const QuestionCard = ({
     </div>
 
     <div className="mt-3.5 flex flex-wrap gap-2">
-        {tags.map((tag)=> (
-            <RenderTag key={tag._id} _id={tag._id} name={tag.name}  />
+        {tags.map((tag, index)=> (
+            <RenderTag key={tag._id+index} _id={tag._id} name={tag.name}  /> //////// key problem //////////////////////////////////
         ))}
     </div>
 
@@ -71,7 +71,7 @@ const QuestionCard = ({
         <Metric 
         imgUrl="/assets/icons/message.svg"
         alt="Upvotes"
-        value={formatNumber(answers.length)}
+        value={formatNumber(answers?.length)}
         title="Answers"
         textStyles= "small-medium text-dark400_light800"
         />
