@@ -10,42 +10,6 @@ import Link from "next/link";
 import React from "react";
 
 
-// const question = [
-//   { 
-//     _id: '1', 
-//     title: "Cascading Deletes in SQLAlchemy?",
-//     tags: [{ _id: '1', name: "python" }, { _id: '2', name: "sql" }],
-//     author: {
-//       _id: '1',
-//       name: 'John Doe',
-//       picture: 'https://yourimageurl.com/johndoe.jpg'
-//     },
-//     upvotes: 10,
-//     views: 100,
-//     answers: [
-//       { answerId: 'a1', text: 'Use the cascade option in your relationship' }
-//     ],
-//     createdAt: new Date('2021-09-01T00:00:00')
-//   },
-//   { 
-//     _id: '2', 
-//     title: "How to center a div",
-//     tags: [{ _id: '1', name: "css" }, { _id: '2', name: "css" }],
-//     author: {
-//       _id: '2',
-//       name: 'Jane Doe',
-//       picture: 'https://yourimageurl.com/janedoe.jpg'
-//     },
-//     upvotes: 20,
-//     views: 200,
-//     answers: [
-//       { answerId: 'a2', text: 'Use flexbox or grid for centering' }
-//     ],
-//     createdAt: new Date('2021-10-01T00:00:00')
-//   },
-// ];
-
-
 const Home = async () => {
 
   const result = await getQuestions({});
