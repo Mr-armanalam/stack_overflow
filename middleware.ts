@@ -5,12 +5,12 @@ const isPublicRoute = createRouteMatcher([
   '/sign-in(.*)',
   '/', 
   '/api/webhook',
-  // 'question/:id',
-  // '/tags',
-  // '/tags/: id',
-  // '/profile:id',
-  // '/community',
-  // '/jobs'
+   'question/:id',
+  '/tags',
+  '/tags/:id',
+  '/profile:id',
+  '/community',
+  '/jobs'
 ])
 export default clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
@@ -26,8 +26,8 @@ export const config = {
     // Always run for API routes
     '/(api|trpc)(.*)',
   ],
-  ignoredRoutes: [
-    '/api/webhook', // Example route to ignore
-    // '/api/chatgpt',   // Another example route to ignore
-  ],
+  // ignoredRoutes: [
+  //   '/api/webhook', 
+  //   // '/api/chatgpt',   
+  // ],
 }
