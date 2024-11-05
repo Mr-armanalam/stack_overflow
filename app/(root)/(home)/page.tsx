@@ -12,10 +12,7 @@ import React from "react";
 
 const Home = async () => {
 
-  const result = await getQuestions({});
-
-  // console.log(result.questions);
-  
+  const result = await getQuestions({});  
 
   return (
     <>
