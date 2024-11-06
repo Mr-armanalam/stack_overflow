@@ -1,10 +1,17 @@
-{
-  "extends": ["next/core-web-vitals",
-  "standard", "plugin:tailwindcss/recommended","prettier"]
-}
-
-
 // {
-//   "extends": ["next/core-web-vitals", "next/typescript", 
+//   "extends": ["next/core-web-vitals", "next/typescript",
 //   "standard", "plugin:tailwindcss/recommended","prettier"]
 // }
+
+{
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "standard",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "plugins": ["react", "@typescript-eslint"]
+}
