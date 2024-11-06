@@ -7,7 +7,7 @@ import RenderTag from "@/components/shared/RenderTag";
 import { getQuestionsById } from "@/lib/actions/question.action";
 import { formatNumber, getTimestamp } from "@/lib/utils";
 
-const page = async ({ params, searchParams }) => {
+const page = async ({ params, searchParams }:{params:any, searchParams:any}) => {
 //   console.log(params);
 
 const result = await getQuestionsById({questionId: params.id});
