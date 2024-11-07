@@ -33,6 +33,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     // Create the tags or get their ObjectId if they already exist
     const tagDocuments = [];
     for (const tag of tags) {
+
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } }, // finding parameter by regular expression with case insensitive
         { $setOnInsert: { name: tag }, $push: { questions: new mongoose.Types.ObjectId() } }, // on it
@@ -40,16 +41,16 @@ export async function createQuestion(params: CreateQuestionParams) {
       );
 
       tagDocuments.push(existingTag._id);
-    }
-
+      
+    }  
+    
     const question = await Question.create({ title, content, tags: tagDocuments, author });
 
-    await Question.findByIdAndUpdate(question._id, {
-      $push: { tags: { $each: tagDocuments } },
-    });
+    // await Question.findByIdAndUpdate(question._id, {
+    //   $push: { tags: { $each: tagDocuments } },
+    // });
 
     revalidatePath(path)
-    // return question;
   } catch (error) {
     console.error(error);
     throw error;

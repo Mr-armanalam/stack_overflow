@@ -24,6 +24,7 @@ import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname} from "next/navigation";
 import { useRouter } from 'next/navigation'
+import { useTheme } from "@/context/ThemeProvider";
 
 
 const type: any = "create";
@@ -33,6 +34,8 @@ interface Props {
 }
 
 const Question = ({mongoUserId}: Props) => {
+
+  const { mode } = useTheme();
   
   const editorRef = useRef(null);
     const router = useRouter();
@@ -183,6 +186,8 @@ const Question = ({mongoUserId}: Props) => {
                       "alignright alignjustify | bullist numlist outdent indent | " +
                       "removeformat | help",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === 'dark' ? 'oxide-dark' : 'oxide',
+                    content_css: mode === 'dark' ? 'dark' : 'light',
                   }}
                 />
                 {/* todo add an editor component */}
