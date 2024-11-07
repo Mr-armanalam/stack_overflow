@@ -24,7 +24,7 @@ const AllAnswers = async ({
   filter,
 }: Props) => {
 
-  const result = await getAnswers({questionId});  
+  const answer = await getAnswers({questionId});    
   
   return (
     <div className="mt-11 ">
@@ -37,7 +37,7 @@ const AllAnswers = async ({
         </div>
 
         <div>
-          {result.answers.map((answer) => (
+          {answer.answers.map((answer) => (
             <article key={answer._id} className="light-border border-b py-10">
               <div className="flex items-center justify-between">
                 {/* SPAN ID */}
@@ -63,7 +63,15 @@ const AllAnswers = async ({
                     </div>
                   </Link>
                   <div className="flex justify-end">
-                    <Votes />
+                  <Votes
+                    type="Answer"
+                    itemId={JSON.stringify(answer._id)}
+                    userId={JSON.stringify(userId)}      //////////// for findig current user ///////////////////
+                    upvotes={answer.upvotes.length}
+                    hasupVoted={answer.upvotes.includes(userId)}
+                    downvotes={answer.downvotes.length}
+                    hasdownVoted={answer.downvotes.includes(userId)}
+                  />
                   </div>
                 </div>
               </div>
