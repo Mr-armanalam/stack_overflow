@@ -16,7 +16,7 @@ interface Props {
     name: string;
     picture: string;
   };
-  upvotes: number;
+  upvotes: string[];
   views: number;
   answers: Array<object>;
   createdAt: Date;
@@ -65,7 +65,7 @@ const QuestionCard = ({
         <Metric 
         imgUrl="/assets/icons/like.svg"
         alt="Upvotes"
-        value={formatNumber(upvotes)}
+        value={formatNumber(upvotes?.length)}
         title="Votes"
         textStyles= "small-medium text-dark400_light800"
         />
@@ -80,7 +80,7 @@ const QuestionCard = ({
         imgUrl="/assets/icons/eye.svg"
         alt="eye"
         value={formatNumber(views)}
-        title="Votes"
+        title="Views"
         textStyles= "small-medium text-dark400_light800"
         />
     </div>

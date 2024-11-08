@@ -39,7 +39,7 @@ const page = async ({
       <div className="flex-start w-full flex-col">
         <div className="flex w-full flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
           <Link
-            href={`/profile/${result.author.clerkId}`}
+            href={`/profile/${result?.author.clerkId}`}
             className="flex flex-row items-center justify-start gap-1"
           >
             <Image

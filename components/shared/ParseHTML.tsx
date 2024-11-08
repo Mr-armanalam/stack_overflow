@@ -36,7 +36,7 @@ const ParseHTML = ({data}: Props) => {
         Prism.highlightAll();
     }, [])
   return (
-    <div>
+    <div className='max-w-[50vw]'>
         {parse(data)}
     </div>
   )
