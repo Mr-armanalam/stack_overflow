@@ -30,25 +30,42 @@ export async function createQuestion(params: CreateQuestionParams) {
 
     const { title, content, tags, author, path } = params;
 
-    // Create the tags or get their ObjectId if they already exist
     const tagDocuments = [];
-    for (const tag of tags) {
 
-      const existingTag = await Tag.findOneAndUpdate(
-        { name: { $regex: new RegExp(`^${tag}$`, "i") } }, // finding parameter by regular expression with case insensitive
-        { $setOnInsert: { name: tag }, $push: { questions: new mongoose.Types.ObjectId() } }, // on it
-        { upsert: true, new: true, setDefaultsOnInsert: true } // additional provide information (to create a new tag if no match found)
-      );
+    //////////////////////////////////// Extra but usefull ////////////////////////////////////////////////////////////
 
-      tagDocuments.push(existingTag._id);
+    // Create the tags or get their ObjectId if they already exist
+    // for (const tag of tags) {
+
+    //   const existingTag = await Tag.findOneAndUpdate(
+    //     { name: { $regex: new RegExp(`^${tag}$`, "i") } }, // finding parameter by regular expression with case insensitive
+    //     { $setOnInsert: { name: tag }, $push: { questions: new mongoose.Types.ObjectId() } }, // on it
+    //     { upsert: true, new: true, setDefaultsOnInsert: true } // additional provide information (to create a new tag if no match found)
+    //   );
+
+    //   tagDocuments.push(existingTag._id);
       
-    }  
+    // }  
     
-    const question = await Question.create({ title, content, tags: tagDocuments, author });
+    // const question = await Question.create({ title, content, tags: tagDocuments, author });
 
-    // await Question.findByIdAndUpdate(question._id, {
-    //   $push: { tags: { $each: tagDocuments } },
-    // });
+    /////////////////////////////////// End ////////////////////////////////////////////////////////////////////////
+
+    const question = await Question.create({ title, content, author });
+
+    for (const tag of tags) {
+      const existingTag = await Tag.findOneAndUpdate(
+        {name: { $regex: new RegExp(`^${tag}$`, "i") } },
+        { $setOnInsert: { name: tag }, $push: { questions: question._id } },
+        { upsert: true, new: true,  } 
+      )
+
+      tagDocuments.push(existingTag._id)
+    }
+
+    await Question.findByIdAndUpdate(question._id, {
+      $push: { tags: { $each: tagDocuments } },
+    });
 
     revalidatePath(path)
   } catch (error) {

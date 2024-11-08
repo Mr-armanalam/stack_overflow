@@ -4,7 +4,7 @@ import RenderTag from "../shared/RenderTag";
 import Metric from "../Metric";
 import { formatNumber, getTimestamp } from "@/lib/utils";
 
-interface Props {
+export interface QcProps {
   _id: string;
   title: string;
   tags: {
@@ -31,7 +31,7 @@ const QuestionCard = ({
   views,
   answers,
   createdAt,
-}: Props) => {
+}: QcProps) => {
   // console.log(author.picture)
   return <div className="card-wrapper rounded-[10px] p-9 sm:px-11 ">
     <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
