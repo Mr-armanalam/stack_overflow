@@ -16,8 +16,6 @@ const Page = async ({params, searchParams}: URLProps) => {
         page: 1,
         searchQuery: searchParams.q
     }) 
-
-    console.log(result);
     
   return (
     <>

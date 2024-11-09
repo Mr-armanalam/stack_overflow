@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const getTimestamp = (createdAt: Date): string => {
@@ -36,3 +36,11 @@ export const formatNumber = (num: number): string => {
     return num?.toString(); // Return as is for smaller numbers
   }
 };
+
+export function getMonthYear(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    month: "long",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+}

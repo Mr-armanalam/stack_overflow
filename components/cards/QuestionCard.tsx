@@ -6,6 +6,7 @@ import { formatNumber, getTimestamp } from "@/lib/utils";
 
 export interface QcProps {
   _id: string;
+  clerkId?: string | null;
   title: string;
   tags: {
     _id: string;
@@ -24,6 +25,7 @@ export interface QcProps {
 
 const QuestionCard = ({
   _id,
+  clerkId,
   title,
   tags,
   author,
@@ -32,7 +34,6 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QcProps) => {
-  // console.log(author.picture)
   return <div className="card-wrapper rounded-[10px] p-9 sm:px-11 ">
     <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
@@ -48,7 +49,7 @@ const QuestionCard = ({
 
     <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag, index)=> (
-            <RenderTag key={tag._id+index} _id={tag._id} name={tag.name}  /> //////// key problem //////////////////////////////////
+            <RenderTag key={tag._id+index} _id={tag._id} name={tag.name}  /> //////// key problem /////////////
         ))}
     </div>
 
