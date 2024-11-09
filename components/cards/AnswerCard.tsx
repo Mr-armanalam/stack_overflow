@@ -2,6 +2,8 @@ import Link from "next/link";
 import React from "react";
 import Metric from "../Metric";
 import { formatNumber, getTimestamp } from "@/lib/utils";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteAction from "../shared/EditDeleteAction";
 
 export interface QcProps {
   _id: string;
@@ -27,13 +29,12 @@ const AnswerCard = ({
   question,
   createdAt,
 }: QcProps) => {
+    const showActionButton = clerkId && clerkId === author.clerkId;
+        
   return (
-    <div
-      
-      className="card-wrapper rounded-[10px] py-9 px-11 "
-    >
-      <Link href={`quesion/${question._id}/#${_id}`} className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
-        <div>
+    <div className="card-wrapper rounded-[10px] py-9 px-11 ">
+      <Link href={`/question/${question._id}`} className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
+        <div >
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden ">
             {getTimestamp(createdAt)}
           </span>
@@ -41,6 +42,13 @@ const AnswerCard = ({
             {question.title}
           </h3>
         </div>
+      
+        <SignedIn>
+          {showActionButton && (
+            <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
+
       </Link>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
