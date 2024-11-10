@@ -9,7 +9,7 @@ export interface CreateAnswerParams {
 }
 export interface GetAnswersParams {
   questionId: string;
-  sortBy?: string;
+  sortBy?: string | string[];
   page?: number;
   pageSize?: number;
 }
