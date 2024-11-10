@@ -7,15 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
 import { QuestionSchema } from "@/lib/validation";
@@ -35,23 +27,20 @@ interface Props {
 
 const Question = ({type,mongoUserId, questionDetails}: Props) => {
 
-  const { mode } = useTheme();
-  
+  const { mode } = useTheme(); 
   const editorRef = useRef(null);
-    const router = useRouter();
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pathname = usePathname();
 
-
-  const parsedQuestionDetails = JSON.parse(questionDetails || '');
-
-  const groupedTags = parsedQuestionDetails.tags.map((tag:any) => tag.name);
+  const parsedQuestionDetails = questionDetails && JSON.parse(questionDetails || '');
+  const groupedTags = parsedQuestionDetails?.tags.map((tag:any) => tag.name);
 
   const form = useForm<z.infer<typeof QuestionSchema>>({
     resolver: zodResolver(QuestionSchema),
     defaultValues: {
-      title: parsedQuestionDetails.title || "",
-      explanation: parsedQuestionDetails.content || '',
+      title: parsedQuestionDetails?.title || "",
+      explanation: parsedQuestionDetails?.content || '',
       tags: groupedTags || [],
     },
   });
@@ -62,15 +51,13 @@ const Question = ({type,mongoUserId, questionDetails}: Props) => {
     try {
       
       if(type === 'Edit'){
-
         await editQuestion({
-          questionId: parsedQuestionDetails._id,
+          questionId: parsedQuestionDetails?._id,
           title: values.title,
           content: values.explanation, 
           path: pathname
         })
-
-        router.push(`/question/${parsedQuestionDetails._id}`);
+        router.push(`/question/${parsedQuestionDetails?._id}`);
 
       } else {
         await createQuestion({
@@ -80,15 +67,14 @@ const Question = ({type,mongoUserId, questionDetails}: Props) => {
           author: JSON.parse(mongoUserId),
           path:pathname        
         });
+        ///////////// navigate to home page ////////////////  
 
-        ///////////// navigate to home page ////////////////
-  
         router.push('/');
       }
      
     } catch (error) {
       console.log(error);
-    }finally {
+    } finally {
       setIsSubmitting(false);
     }
 
@@ -100,7 +86,6 @@ const Question = ({type,mongoUserId, questionDetails}: Props) => {
   ) => {
     if (e.key === "Enter" && field?.name === "tags") {
       e.preventDefault();
-
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
 
@@ -125,7 +110,6 @@ const Question = ({type,mongoUserId, questionDetails}: Props) => {
 
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag);
-
     form.setValue("tags", newTags);
   };
 
@@ -174,41 +158,23 @@ const Question = ({type,mongoUserId, questionDetails}: Props) => {
                   onInit={(_evt, editor) => (editorRef.current = editor)}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue={parsedQuestionDetails.content || ''}
+                  initialValue={parsedQuestionDetails?.content || ''}
                   init={{
                     height: 350,
                     menubar: false,
-                    plugins: [
-                      "advlist",
-                      "autolink",
-                      "lists",
-                      "link",
-                      "image",
-                      "charmap",
-                      "anchor",
-                      "codesample",
-                      "searchreplace",
-                      "visualblocks",
-                      "fullscreen",
-                      "insertdatetime",
-                      "media",
-                      "table",
-                      "preview",
-                      "help",
-                      "wordcount",
-                    ],
-                    toolbar:
-                      "undo redo | blocks | " +
-                      "bold codesample italic forecolor | alignleft aligncenter " +
-                      "alignright alignjustify | bullist numlist outdent indent | " +
-                      "removeformat | help",
+                    plugins: [ "advlist", "autolink", "lists", "link", "image", "charmap", "anchor", "codesample", "searchreplace", 
+                    "visualblocks", "fullscreen", "insertdatetime", "media", "table", "preview", "help", "wordcount" ],
+
+                    toolbar:"undo redo | blocks | " + "bold codesample italic forecolor | alignleft aligncenter " +
+                      "alignright alignjustify | bullist numlist outdent indent | " + "removeformat | help",
+
                     content_style: "body { font-family:Inter; font-size:16px }",
                     skin: mode === 'dark' ? 'oxide-dark' : 'oxide',
                     content_css: mode === 'dark' ? 'dark' : 'light',
                   }}
-                />
-                {/* todo add an editor component */}
+                />               
               </FormControl>
+              
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Introduce the problem and expand on what you put in the title.
                 Minimum 20 characters

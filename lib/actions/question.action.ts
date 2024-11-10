@@ -1,5 +1,5 @@
 "use server";
-import mongoose from "mongoose";
+import mongoose, { FilterQuery } from "mongoose";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import { connectToDatabase } from "../mongoose";
@@ -21,7 +21,17 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const questions = await Question.find({})
+    const { searchQuery } = params;
+
+    const query : FilterQuery<typeof Question> = {};
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") }},
+        { content: { $regex: new RegExp(searchQuery, "i") }},
+      ]
+    }
+
+    const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
       .sort({ createdAt: -1 });

@@ -83,9 +83,18 @@ export async function getAllUsers(params: GetAllUsersParams) {
     try {
         connectToDatabase();
 
-        // const { page = 1, pageSize = 20, filter, searchQuery} = params;
+        const {searchQuery} = params;
+
+        const query: FilterQuery<typeof User> = {};
+
+        if(searchQuery) {
+            query.$or = [
+                { username: new RegExp(searchQuery, 'i') },
+                { name: new RegExp(searchQuery, 'i') },
+            ]
+        }
         
-        const users = await User.find({})
+        const users = await User.find(query)
         .sort({createdAt: -1})
 
         return { users }
@@ -131,7 +140,7 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
     try {
         connectToDatabase();
 
-        const { clerkId, page = 1, pageSize = 10, filter, searchQuery} = params;
+        const { clerkId, searchQuery} = params;
 
         const query : FilterQuery<typeof Question> = searchQuery ? { title: { $regex: new RegExp(searchQuery, 'i')}}:{};
 
