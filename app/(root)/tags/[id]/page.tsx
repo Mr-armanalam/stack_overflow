@@ -1,16 +1,14 @@
 import QuestionCard, { QcProps } from '@/components/cards/QuestionCard'
-import Filter from '@/components/shared/Filter'
 import NoResult from '@/components/shared/NoResult'
 import Pagination from '@/components/shared/Pagination'
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
-import { QuestionFilters } from '@/constants/filters'
-import { IQuestion } from '@/database/question.model'
 import { getQuesionsByTagId } from '@/lib/actions/tag.action'
 import { URLProps } from '@/types'
 import React from 'react'
 
 
 const Page = async ({params, searchParams}: URLProps) => {
+  const searchparams = await searchParams;
 
     const result = await getQuesionsByTagId({
         tagId: params.id,
@@ -58,7 +56,7 @@ const Page = async ({params, searchParams}: URLProps) => {
       </div>
       <div className="mt-10">
         <Pagination 
-          pageNumber={searchParams?.page ? +searchParams.page: 1}
+          pageNumber={searchparams?.page ? +searchparams.page: 1}
           isNext={result.isNext}
         />
       </div>

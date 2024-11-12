@@ -1,5 +1,6 @@
+/* eslint-disable spaced-comment */
 "use server";
-import mongoose, { FilterQuery } from "mongoose";
+import { FilterQuery } from "mongoose";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import { connectToDatabase } from "../mongoose";
@@ -104,6 +105,16 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocuments } },
     });
 
+    ////////////// Create an interaction record for the user's ask_question action ///////////////////
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+      tags: tagDocuments
+    });
+    ////////////// Increment author's reputation by +5 for creating a question ///////////////////
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
+
     revalidatePath(path);
   } catch (error) {
     console.error(error);
@@ -159,7 +170,12 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
       throw new Error("Question not found");
     }
 
-    /////////////// Increment author's reputation //////////////////
+    /////////////// Increment author's reputation by +1/-1 for upvoting/revoking an upvote to the question //////////////////
+    await User.findByIdAndUpdate(userId, { $inc: { reputation: hasupVoted ? -1 : 1 } },)
+
+    ////////////// Increment author's reputation by +10/-10 for recieving an upvote to the question //////////////////
+    await User.findByIdAndUpdate(question.author, { $inc: { reputation: hasupVoted ? -10 : 10 } })
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -194,6 +210,14 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     }
 
     /////////////// Increment author's reputation //////////////////
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2: 2}
+    })
+
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasdownVoted? -10: 10}
+    })
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -243,7 +267,7 @@ export async function editQuestion(params: EditQuestionParams) {
   try {
     connectToDatabase();
 
-    const { questionId, title, content, path } = params;
+    const { questionId, title, content } = params;
 
     const question = await Question.findById(questionId).populate("tags");
 

@@ -13,11 +13,12 @@ import React from "react";
 
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
+  const searchparams = await searchParams;
 
   const result = await getQuestions({
-    searchQuery: searchParams.q,
-    filter: searchParams.filter,
-    page: searchParams.page ? +searchParams.page : 1,
+    searchQuery: searchparams.q,
+    filter: searchparams.filter,
+    page: searchparams.page ? +searchparams.page : 1,
   });  
 
   return (
@@ -77,7 +78,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
 
       <div className="mt-10">
         <Pagination 
-          pageNumber={searchParams?.page ? +searchParams.page: 1}
+          pageNumber={searchparams?.page ? +searchparams.page: 1}
           isNext={result.isNext}
         />
       </div>

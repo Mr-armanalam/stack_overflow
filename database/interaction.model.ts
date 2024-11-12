@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 import { Schema, model, models, Document } from "mongoose";
 
 export interface IInteraction extends Document {                 ////////// ctrl + f -replace /////////////

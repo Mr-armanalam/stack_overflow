@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable spaced-comment */
 import QuestionCard from "@/components/cards/QuestionCard";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
@@ -11,15 +13,17 @@ import React from "react";
 
 
 const Collection = async ({ searchParams }: SearchParamsProps) => {
+  const searchparams = await searchParams;
 
     const { userId } = await auth();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     if (!userId) null;
 
   const result = await getSavedQuestion({
     clerkId : userId!,  ///////////// modified ///////////////
-    searchQuery: searchParams.q,
-    page: searchParams.page ? +searchParams.page : 1,
+    searchQuery: searchparams.q,
+    page: searchparams.page ? +searchparams.page : 1,
   });  
 
   return (
@@ -68,7 +72,7 @@ const Collection = async ({ searchParams }: SearchParamsProps) => {
 
       <div className="mt-10">
         <Pagination 
-          pageNumber={searchParams?.page ? +searchParams.page: 1}
+          pageNumber={searchparams?.page ? +searchparams.page: 1}
           isNext={result.isNext}
         />
       </div>
