@@ -110,3 +110,25 @@ export const assignBadges = (params: BadgeParam) => {
   }) 
   return badgeCounts;
 }
+
+export const formatAIGeneratedText = (aiText: any) => {
+  const lines = aiText.split("\n");
+  let formattedText = "";
+
+  lines.forEach((line: any) => {
+    if (line.startsWith('**') && line.endsWith('**')) {  
+      formattedText += `<h3>${line.replace(/\*\*/g, '')}</h3>\n`; 
+    } else if (line.startsWith('* **Using')) { 
+      formattedText += `<h4>${line.replace('* **Using', '').replace('**:', '')}</h4>\n`; 
+    } else if (line.startsWith(' * ')) { 
+      formattedText += `<ul><li>${line.replace(' * ', '')}</li></ul>\n`; 
+    } else if (line.startsWith(' ')) { 
+      formattedText += `<pre><code>${line.trim()}</code></pre>\n`; 
+    } else if (line.trim() === '') {  
+      formattedText += `<br/>`; 
+    } else {
+      formattedText += `<p>${line.trim()}</p>\n`}
+    });
+
+  return formattedText;
+};
