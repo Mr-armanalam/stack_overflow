@@ -27,7 +27,7 @@ export interface ParamsProps {
   params: { id: string };
 }
 export interface SearchParamsProps {
-  searchParams: { [key: string]: string | undefined } ;
+  searchParams: { [key: string]: string | undefined  } ; // only strings[]
 }
 export interface URLProps {
   params: { id: string };

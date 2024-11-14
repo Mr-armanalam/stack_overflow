@@ -18,18 +18,18 @@ export const metadata: Metadata = {
   title: "Home | Dev Overflow",
 }
 
-const Home = async ({ searchParams }: SearchParamsProps) => {
-  const searchparams = searchParams;
+const Home = async ({ searchParams }: SearchParamsProps ) => {
+  // const searchparams = await searchParams;
   const { userId } = await auth();
 
   let result;
 
-  if(searchparams?.filter === 'recommended') {
+  if(searchParams?.filter === 'recommended') {
     if(userId) {
       result = await getRecommentedQuestions({
         userId,
-        searchQuery: searchparams.q,
-        page: searchparams.page ? +searchparams.page : 1,
+        searchQuery: searchParams.q,
+        page: searchParams.page ? +searchParams.page : 1,
       }); 
     } else {
       result = {
@@ -39,9 +39,9 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
     }
   } else {
     result = await getQuestions({
-      searchQuery: searchparams.q,
-      filter: searchparams.filter,
-      page: searchparams.page ? +searchparams.page : 1,
+      searchQuery: searchParams.q,
+      filter: searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1,
     }); 
   }
 
@@ -103,7 +103,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
 
       <div className="mt-10">
         <Pagination 
-          pageNumber={searchparams?.page ? +searchparams.page: 1}
+          pageNumber={searchParams?.page ? +searchParams.page: 1}
           isNext={result.isNext}
         />
       </div>
