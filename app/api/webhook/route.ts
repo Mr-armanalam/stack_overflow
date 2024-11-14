@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
@@ -54,12 +55,13 @@ export async function POST(req: Request) {
   // For this guide, you simply log the payload to the console
 //   const { id } = evt.data;
   const eventType = evt.type;
-  console.log(eventType);
+  // console.log(eventType);
   if(eventType === 'user.created'){
     const {id, email_addresses, image_url, username, first_name, last_name} = evt.data;
 
     // Create a new user in your database
-    const mongoUser = await createUser({
+    // const mongoUser =
+    await createUser({
         clerkId: id,
         name: `${first_name}${last_name ? `${last_name}` : ''}`,
         username: username!,
@@ -74,7 +76,8 @@ export async function POST(req: Request) {
     const {id, email_addresses, image_url, username, first_name, last_name} = evt.data;
 
     // Create a new user in your database
-    const mongoUser = await updateUser({
+    // const mongoUser = 
+    await updateUser({
         clerkId: id,
         updateData: {
             name: `${first_name}${last_name? `${last_name}` : ''}`,
@@ -99,5 +102,5 @@ export async function POST(req: Request) {
     return NextResponse.json({message: 'OK', user: deletedUser})
   }
 
-  return new Response("", { status: 200 });
+  return NextResponse.json( {message: 'OK'});
 }

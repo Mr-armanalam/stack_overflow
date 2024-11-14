@@ -8,7 +8,7 @@ export interface IQuestion extends Document {
     upvotes: Schema.Types.ObjectId[];
     downvotes: Schema.Types.ObjectId[];
     author: Schema.Types.ObjectId;
-    answer: Schema.Types.ObjectId[];
+    answers: Schema.Types.ObjectId[]; //////////////////////////////////
     createdAt: Date;
 }
 
@@ -20,10 +20,10 @@ const QuestionSchema = new Schema<IQuestion>({
     upvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     downvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     author: { type: Schema.Types.ObjectId, ref: 'User' },
-    answer: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
+    answers: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
     createdAt: { type: Date, default: Date.now },
 });
 
-const Question = models?.Question || model<IQuestion>('Question', QuestionSchema);
+const Question = models.Question || model<IQuestion>('Question', QuestionSchema);
 
 export default Question;

@@ -1,6 +1,11 @@
 // {
-//   "extends": ["next/core-web-vitals", "next/typescript",
-//   "standard", "plugin:tailwindcss/recommended","prettier"]
+//   "extends": [
+//     "next/core-web-vitals",
+//     "next/typescript",
+//     "standard",
+//     "plugin:tailwindcss/recommended",
+//     "prettier"
+//   ]
 // }
 
 {
@@ -13,5 +18,10 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "plugins": ["react", "@typescript-eslint"]
+  "plugins": ["react", "@typescript-eslint", "tailwindcss"],
+  "rules": {
+    "tailwindcss/classnames-order": "warn",
+    "tailwindcss/enforces-negative-arbitrary-values": "error"
+  }
 }
+// "tailwindcss/enforces-shorthand": "error"
