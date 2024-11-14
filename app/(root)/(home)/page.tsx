@@ -7,7 +7,7 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import { getQuestions, getRecommentedQuestions } from "@/lib/actions/question.action";
-import { SearchParamsProps } from "@/types";
+// import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import React from "react";
 
@@ -18,18 +18,20 @@ export const metadata: Metadata = {
   title: "Home | Dev Overflow",
 }
 
-const Home = async ({ searchParams }: SearchParamsProps ) => {
-  // const searchparams = await searchParams;
+type SearchParams = Promise<{ [key: string]: string | undefined }>
+// const Home = async ({ searchParams }: SearchParams ) => {
+const Home = async (prop: {searchParams : SearchParams} ) => {
+  const searchparams = await prop.searchParams;
   const { userId } = await auth();
 
   let result;
 
-  if(searchParams?.filter === 'recommended') {
+  if(searchparams?.filter === 'recommended') {
     if(userId) {
       result = await getRecommentedQuestions({
         userId,
-        searchQuery: searchParams.q,
-        page: searchParams.page ? +searchParams.page : 1,
+        searchQuery: searchparams.q,
+        page: searchparams.page ? +searchparams.page : 1,
       }); 
     } else {
       result = {
@@ -39,9 +41,9 @@ const Home = async ({ searchParams }: SearchParamsProps ) => {
     }
   } else {
     result = await getQuestions({
-      searchQuery: searchParams.q,
-      filter: searchParams.filter,
-      page: searchParams.page ? +searchParams.page : 1,
+      searchQuery: searchparams.q,
+      filter: searchparams.filter,
+      page: searchparams.page ? +searchparams.page : 1,
     }); 
   }
 
@@ -103,7 +105,7 @@ const Home = async ({ searchParams }: SearchParamsProps ) => {
 
       <div className="mt-10">
         <Pagination 
-          pageNumber={searchParams?.page ? +searchParams.page: 1}
+          pageNumber={searchparams?.page ? +searchparams.page: 1}
           isNext={result.isNext}
         />
       </div>
