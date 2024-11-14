@@ -30,7 +30,7 @@ const Filter = ({ filters, otherClasses, containerClass }: Props) => {
       key: 'filter',
       value
     })
-    router.push(newUrl), { scroll: false };
+    router.push(newUrl, { scroll: false });
   };
 
   return (

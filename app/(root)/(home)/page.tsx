@@ -7,7 +7,7 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import { getQuestions, getRecommentedQuestions } from "@/lib/actions/question.action";
-import { SearchParamsProps } from "@/types";
+// import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import React from "react";
 
@@ -18,8 +18,10 @@ export const metadata: Metadata = {
   title: "Home | Dev Overflow",
 }
 
-const Home = async ({ searchParams }: SearchParamsProps) => {
-  const searchparams = await searchParams;
+type SearchParams = Promise<{ [key: string]: string | undefined }>
+// const Home = async ({ searchParams }: SearchParams ) => {
+const Home = async (prop: {searchParams : SearchParams} ) => {
+  const searchparams = await prop.searchParams;
   const { userId } = await auth();
 
   let result;

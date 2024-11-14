@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 "use server"
 
 import User from "@/database/user.model";
@@ -11,7 +12,8 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
     try {
         connectToDatabase();
 
-        const { userId, limit = 3 } = params;
+        // const { userId, limit = 3 } = params;
+        const { userId } = params;
 
         const user = await User.findById(userId);
 

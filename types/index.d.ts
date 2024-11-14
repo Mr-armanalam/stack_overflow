@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BADGE_CRITERIA } from "@/constants";
 export interface SidebarLink {
   imgURL: string;
@@ -26,7 +27,7 @@ export interface ParamsProps {
   params: { id: string };
 }
 export interface SearchParamsProps {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: { [key: string]: string | undefined  } ; // only strings[]
 }
 export interface URLProps {
   params: { id: string };

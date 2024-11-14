@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client'
 import { sidebarLinks } from "@/constants";
 import React from "react";
@@ -25,7 +26,7 @@ const LeftSidebar = () => {
 
            if(item.route === '/profile'){
             if(userId) {
-              item.route = `${item.route}/${userId}`
+              item.route = `${item.route}/${userId}`            
             } else null;
            } 
 
