@@ -3,17 +3,21 @@ import NoResult from '@/components/shared/NoResult'
 import Pagination from '@/components/shared/Pagination'
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
 import { getQuesionsByTagId } from '@/lib/actions/tag.action'
-import { URLProps } from '@/types'
+// import { URLProps } from '@/types'
 import React from 'react'
 
+type Params = Promise<{ id: string }>
+type SearchParams = Promise<{ [key: string]: string | undefined }>
 
-const Page = async ({params, searchParams}: URLProps) => {
-  const searchparams = await searchParams;
+// const Page = async ({params, searchParams}: URLProps) => {
+const Page = async (props: { params: Params, searchParams: SearchParams }) => {
+  const searchparams = await props.searchParams;
+  const paraams = await props.params
 
     const result = await getQuesionsByTagId({
-        tagId: params.id,
-        page: searchParams.page ? +searchParams.page : 1,
-        searchQuery: searchParams.q
+        tagId: paraams.id,
+        page: searchparams.page ? +searchparams.page : 1,
+        searchQuery: searchparams.q
     }) 
     
   return (
@@ -22,7 +26,7 @@ const Page = async ({params, searchParams}: URLProps) => {
 
       <div className="mt-11 w-full">
         <LocalSearchbar
-          route={`/tags/${params.id}`}
+          route={`/tags/${paraams.id}`}
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search tag questions..."

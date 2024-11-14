@@ -14,16 +14,24 @@ import { getUserById } from "@/lib/actions/user.action";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Votes from "@/components/shared/Votes";
 
-const page = async ({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] };
-}) => {
+
+type Params = Promise<{ id: string }>
+type SearchParams = Promise<{ [key: string]: string | string[] }>
+
+// const page = async ({
+//   params,
+//   searchParams,
+// }: {
+//   params: { id: string };
+//   searchParams: { [key: string]: string | string[] };
+// }) => {
+
+
+const page = async (props: { params: Params, searchParams: SearchParams}) => {
   //////////////////   console.log(params);    ////////////////////////
 
-  const { id } = await params;
+  const { id } = await props.params;
+  const searchparams = await props.searchParams;
   const result = await getQuestionsById({ questionId: id });
 
   const { userId: clerkId } = await auth();
@@ -115,8 +123,10 @@ const page = async ({
         questionId={result._id}
         userId={mongoUser._id}  ///////////////// Edited /////////////////
         totalAnswers={result.answers?.length}
-        page={searchParams?.page}
-        filter={searchParams?.filter}
+        page={searchparams.page }
+        filter={searchparams.filter}
+        // page={props.searchParams?.page }
+        // filter={props.searchParams?.filter}
       />
 
       <Answer
