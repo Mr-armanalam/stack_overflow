@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable spaced-comment */
+/* eslint-disable import/no-duplicates */
 "use client";
 import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
@@ -154,7 +157,7 @@ const Question = ({type,mongoUserId, questionDetails}: Props) => {
               <FormControl className="mt-3.5">
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_tINY_EDITOR_API_KEY}
-                  // @ts-ignore
+                  // @ts-expect-error " current"
                   onInit={(_evt, editor) => (editorRef.current = editor)}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
