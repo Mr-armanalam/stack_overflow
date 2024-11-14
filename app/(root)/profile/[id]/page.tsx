@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { getUserInfo } from "@/lib/actions/user.action";
-import { URLProps } from "@/types";
+// import { URLProps } from "@/types";
 import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
@@ -18,9 +18,15 @@ export const metadata: Metadata = {
   title: "Profile | Dev Overflow",
 }
 
-const Page = async ({ params, searchParams }: URLProps) => {
+type Params = Promise<{ id: string }>
+type SearchParams = Promise<{ [key: string]: string | undefined }>
+
+// const Page = async ({ params, searchParams }: URLProps) => {
+const Page = async (props: { params: Params, searchParams: SearchParams}) => {
+
   const { userId: clerkId } = await auth();
-  const paramsId = await params;
+  const paramsId = await props.params;
+  const searchparams = await props.searchParams
 
   const userInfo = await getUserInfo({ userId: paramsId.id });    // params.id
 
@@ -101,14 +107,14 @@ const Page = async ({ params, searchParams }: URLProps) => {
           </TabsList>
           <TabsContent value="top-posts" className="mt-5 flex w-full flex-col gap-6">
             <QuestionTab 
-              searchParams={searchParams}
+              searchParams={searchparams}
               userId={userInfo.user._id}
               clerkId={clerkId}
             />
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
             <AnswersTab
-              searchParams={searchParams}
+              searchParams={searchparams}
               userId={userInfo.user._id}
               clerkId={clerkId}
             />
