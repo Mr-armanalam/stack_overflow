@@ -6,12 +6,13 @@ import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
-import { getQuestions } from "@/lib/actions/question.action";
+import { getQuestions, getRecommentedQuestions } from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import React from "react";
 
 import type { Metadata } from "next";
+import { auth } from "@clerk/nextjs/server";
 
 export const metadata: Metadata = {
   title: "Home | Dev Overflow",
@@ -19,12 +20,31 @@ export const metadata: Metadata = {
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const searchparams = await searchParams;
+  const { userId } = await auth();
 
-  const result = await getQuestions({
-    searchQuery: searchparams.q,
-    filter: searchparams.filter,
-    page: searchparams.page ? +searchparams.page : 1,
-  });  
+  let result;
+
+  if(searchparams?.filter === 'recommended') {
+    if(userId) {
+      result = await getRecommentedQuestions({
+        userId,
+        searchQuery: searchparams.q,
+        page: searchparams.page ? +searchparams.page : 1,
+      }); 
+    } else {
+      result = {
+        questions: [],
+        isNext: false
+      }
+    }
+  } else {
+    result = await getQuestions({
+      searchQuery: searchparams.q,
+      filter: searchparams.filter,
+      page: searchparams.page ? +searchparams.page : 1,
+    }); 
+  }
+
 
   return (
     <>

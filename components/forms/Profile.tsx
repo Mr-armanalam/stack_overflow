@@ -14,7 +14,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ProfileSchema } from "@/lib/validation";
 import { usePathname, useRouter } from "next/navigation";
 import { updateUser } from "@/lib/actions/user.action";
@@ -45,18 +45,17 @@ const Profile = ({ clerkId, user }: Props) => {
     setIsSubmitting(true);
 
     try {
-    
-        await updateUser({
-            clerkId,
-            updateData: {
-              name: values.name,
-              username: values.username,
-              portfolioWebsite: values.portfolioWebsite,
-              location: values.location,
-              bio: values.bio,
-            },
-            path: pathname,         
-        })
+      await updateUser({
+        clerkId,
+        updateData: {
+          name: values.name,
+          username: values.username,
+          portfolioWebsite: values.portfolioWebsite,
+          location: values.location,
+          bio: values.bio,
+        },
+        path: pathname,
+      });
 
       router.back();
     } catch (error) {
@@ -70,7 +69,7 @@ const Profile = ({ clerkId, user }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-9 flex flex-col w-full gap-9"
+        className="mt-9 flex w-full flex-col gap-9"
       >
         <FormField
           control={form.control}

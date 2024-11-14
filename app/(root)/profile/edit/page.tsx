@@ -1,11 +1,10 @@
-import Question from '@/components/components/Question'
 import Profile from '@/components/forms/Profile';
-import { getQuestionsById } from '@/lib/actions/question.action';
 import { getUserById } from '@/lib/actions/user.action';
 import { ParamsProps } from '@/types';
 import { auth } from '@clerk/nextjs/server'
 import React from 'react'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Page = async ({params}: ParamsProps) => {
 
   const { userId} = await auth();
