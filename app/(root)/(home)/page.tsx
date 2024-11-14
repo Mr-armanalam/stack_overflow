@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  const searchparams = await searchParams;
+  const searchparams = searchParams;
   const { userId } = await auth();
 
   let result;
