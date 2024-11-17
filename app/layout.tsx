@@ -27,6 +27,16 @@ export const metadata: Metadata = {
   icons: {
     icon: "/assets/images/site-logo.svg",
   },
+  creator: "Arman Alam",
+  authors: [{ name: "Arman Alam", url: "https://armanalam.vercel.app/" }],
+  applicationName: "DevFlow",
+  openGraph: {
+    type: "website",
+    url: "https://stack-overflow-gray.vercel.app/",
+    images: "/home_page.png",
+    countryName: "India",
+    emails: 'armanalam78578@gmail.com'
+  }
 };
 
 export default function RootLayout({
