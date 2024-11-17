@@ -11,6 +11,11 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: "Community | Dev Overflow",
+  openGraph: {
+    type: "website",
+    url: "https://stack-overflow-gray.vercel.app/",
+    images: "/community_page.png",
+  },
 }
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>

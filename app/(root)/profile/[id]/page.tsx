@@ -16,6 +16,11 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Profile | Dev Overflow",
+  openGraph: {
+    type: "website",
+    url: "https://stack-overflow-gray.vercel.app/",
+    images: "/profile_page.png",
+  },
 }
 
 type Params = Promise<{ id: string }>
