@@ -20,9 +20,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://stack-overflow-gray.vercel.app/",
     images: "/home_page.png",
-    countryName: "India",
-    emails: 'armanalam78578@gmail.com'
-  }
+  },
 }
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>
